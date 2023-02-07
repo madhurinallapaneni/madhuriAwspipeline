@@ -2,7 +2,11 @@ pipeline {
 
   agent any
   environment {
-
+    //adding a comment for the commit test
+  
+    MULE_VERSION = '4.4.0'
+    BG = "Mulesoft"
+    WORKER = "Micro"
     M2SETTINGS = "/Users/madhuri/Desktop/POCs/munittestcases/Settings.xml"
   }
   stages {
@@ -12,16 +16,21 @@ pipeline {
       }
     }
 
+    stage('Test') {
+      steps {
+          bat "mvn test"
+      }
+    }
 
      stage('Deploy Development') {
       environment {
         ENVIRONMENT = 'Sandbox'
-        APP_NAME = 'sandbox-omni-channel-api-MN'
+        APP_NAME = 'munittestcases'
       }
       steps {
-            bat 'mvn -U -V -e -B -gs %M2SETTINGS% -DskipTests deploy -DmuleDeploy -Dmule.version="4.4.0" -Danypoint.username="madhurinallapa" -Danypoint.password="Vibha@00" -Dcloudhub.app="munittestcases" -Dcloudhub.environment="Sandbox" -Dcloudhub.bg="Mulesoft" -Dcloudhub.worker="1"'
+            bat 'mvn -U -V -e -B -gs %M2SETTINGS% -DskipTests deploy -DmuleDeploy -Dmule.version="%MULE_VERSION%" -Danypoint.username=madhurinallapa -Danypoint.password=Vibha@00 -Dcloudhub.app="%APP_NAME%" -Dcloudhub.environment="%ENVIRONMENT%" -Dcloudhub.bg="%BG%" -Dcloudhub.worker="%WORKER%"'
       }
     }
-
-    }
+    
   }
+}
