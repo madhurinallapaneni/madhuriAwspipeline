@@ -23,8 +23,6 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 			<db:sql ><![CDATA[SELECT * FROM StudentDetails.StudentInfo WHERE StudentName =:StudentName]]></db:sql>
 			<db:input-parameters ><![CDATA[#[{StudentName:vars.StudentName}]]]></db:input-parameters>
 		</db:select>
-		<foreach doc:name="For Each" doc:id="977b5dbb-25c5-4e5f-b07d-47343a90e932" />
-		<parallel-foreach doc:name="Parallel For Each" doc:id="e4c7602c-cafd-4da0-958b-1f6308bb6bc5" />
 		<ee:transform doc:name="Transform Message" doc:id="36507f87-3808-4429-894d-646cdfccf270">
 					<ee:message>
 						<ee:set-payload><![CDATA[%dw 2.0
