@@ -14,7 +14,7 @@ pipeline {
       steps {
             export M2_HOME='/opt/homebrew/Cellar/maven/3.8.7/libexec'
             export PATH='$PATH:$M2_HOME/bin'
-            mvn -B -U -e -V clean -gs %M2SETTINGS% -DskipTests package
+            'mvn -B -U -e -V clean -gs %M2SETTINGS% -DskipTests package'
       }
     }
 
@@ -22,7 +22,7 @@ pipeline {
       steps {
           export M2_HOME='/opt/homebrew/Cellar/maven/3.8.7/libexec'
           export PATH='$PATH:$M2_HOME/bin'
-          mvn test
+          'mvn test'
       }
     }
 
@@ -34,7 +34,7 @@ pipeline {
       steps {
             export M2_HOME='/opt/homebrew/Cellar/maven/3.8.7/libexec'
             export PATH='$PATH:$M2_HOME/bin'
-            mvn -U -V -e -B -gs %M2SETTINGS% -DskipTests deploy -DmuleDeploy -Dmule.version="%MULE_VERSION%" -Danypoint.username=madhurinallapa -Danypoint.password=Vibha@00 -Dcloudhub.app="%APP_NAME%" -Dcloudhub.environment="%ENVIRONMENT%" -Dcloudhub.bg="%BG%" -Dcloudhub.worker="%WORKER%"
+           'mvn -U -V -e -B -gs %M2SETTINGS% -DskipTests deploy -DmuleDeploy -Dmule.version="%MULE_VERSION%" -Danypoint.username=madhurinallapa -Danypoint.password=Vibha@00 -Dcloudhub.app="%APP_NAME%" -Dcloudhub.environment="%ENVIRONMENT%" -Dcloudhub.bg="%BG%" -Dcloudhub.worker="%WORKER%"'
       }
     }
     
