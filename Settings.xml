@@ -9,4 +9,21 @@
           <password>Vibha@00</password>
         </server>
 	</servers>
+	    <pluginGroups>
+        <pluginGroup>org.mule.tools</pluginGroup>
+    </pluginGroups>
+    <repositories>
+    <repository>
+        <id>mulesoft-releases</id>
+        <name>MuleSoft Repository</name>
+        <url>http://repository.mulesoft.org/releases/</url>
+        <layout>default</layout>
+    </repository>
+    <repository>
+        <id>mulesoft-snapshots</id>
+        <name>MuleSoft Snapshot Repository</name>
+        <url>http://repository.mulesoft.org/snapshots/</url>
+        <layout>default</layout>
+    </repository>
+</repositories>
 </settings>

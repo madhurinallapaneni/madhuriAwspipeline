@@ -74,6 +74,7 @@
 					</coverage>
 				</configuration>
 			</plugin>
+   
 		</plugins>
 	</build>
 
