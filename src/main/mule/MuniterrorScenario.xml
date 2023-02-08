@@ -12,6 +12,9 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="e413234a-e7c8-4e20-b8bb-63d6d465827b" >
 		<http:listener-connection host="0.0.0.0" port="8081" />
 	</http:listener-config>
+	<db:config name="Database_Config1" doc:name="Database Config" doc:id="6964aefc-a652-457b-af50-418c292992d0" >
+		<db:my-sql-connection host="127.0.0.1" port="3306" user="root" password="root@000" database="StudentDetails" />
+	</db:config>
 	<flow name="MuniterrorScenarioFlow" doc:id="f9d70c87-135b-4ad6-ac5a-e5ca588900c0" >
 		<http:listener doc:name="Listener" doc:id="a771c258-51e8-473f-b62d-7bfe07d689f3" config-ref="HTTP_Listener_config" path="/munit">
 			<http:error-response >
@@ -19,18 +22,11 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 			</http:error-response>
 		</http:listener>
 		<set-variable value="#[attributes.queryParams.StudentName]" doc:name="Set Variable" doc:id="19fab52a-9075-4684-8c73-d5a4a284aab0" variableName="StudentName"/>
-		<db:select doc:name="Select" doc:id="16c26127-28a1-4804-a60c-ae7418910cf4" config-ref="Database_Config">
-			<db:sql ><![CDATA[SELECT * FROM StudentDetails.StudentInfo WHERE StudentName =:StudentName]]></db:sql>
+		<db:select doc:name="Select" doc:id="e77cf46c-900a-453c-8df9-3e876da2b82e" config-ref="Database_Config1">
+			<db:sql ><![CDATA[SELECT * FROM StudentDetails.StudentInfo WHERE StudentName =:StudentName
+]]></db:sql>
 			<db:input-parameters ><![CDATA[#[{StudentName:vars.StudentName}]]]></db:input-parameters>
 		</db:select>
-		<ee:transform doc:name="Transform Message" doc:id="36507f87-3808-4429-894d-646cdfccf270">
-					<ee:message>
-						<ee:set-payload><![CDATA[%dw 2.0
-output application/json
----
-payload]]></ee:set-payload>
-					</ee:message>
-				</ee:transform>
 		<choice doc:name="Choice" doc:id="fdedf796-e533-4e14-bf7f-2d7756948617" >
 			<when expression="#[sizeOf(payload)&gt;0]">
 				<logger level="INFO" doc:name="Logger" doc:id="d808fd96-53b0-4ea1-b15f-4cbd2cf42521" message="#[payload]"/>
@@ -47,7 +43,7 @@ payload]]></ee:set-payload>
 output application/java
 ---
 {
-	error: "DB CONNEVCTIVITY"
+	error: "DB CONNECTIVITY"
 }]]></ee:set-payload>
 					</ee:message>
 				</ee:transform>

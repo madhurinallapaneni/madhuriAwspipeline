@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="MuniterrorScenario-suite.xml" />
+	<munit:test name="MuniterrorScenarioFlow-test" doc:id="f19d8a5b-c32b-4909-9521-165c44a4fbae" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Select" doc:id="0e1059d2-e992-40d8-8a30-79109747fed1" processor="db:select">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="e77cf46c-900a-453c-8df9-3e876da2b82e" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/java  --- readUrl('classpath://MuniterrorScenarioFlowtest/mock_payload.dwl')]" mediaType="application/java " encoding="UTF-8" />
+					<munit-tools:variables >
+						<munit-tools:variable key="StudentName" value="#[output application/java --- readUrl('classpath://MuniterrorScenarioFlowtest/mock_variable_.dwl')]" mediaType="application/java" encoding="UTF-8" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="a54446f4-ef33-4569-a6d7-f0879945263b" >
+				<munit:payload value="#[readUrl('classpath://MuniterrorScenarioFlowtest/set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://MuniterrorScenarioFlowtest/set-event_attributes.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to MuniterrorScenarioFlow" doc:id="ead1b0c6-e5c5-4019-8901-bac2bb610a04" name="MuniterrorScenarioFlow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="318a8684-8d1e-4abc-91f3-8c4634a37f63" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import MuniterrorScenarioFlowtest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="MuniterrorScenarioFlow-testNoRecords" doc:id="25cce3dd-fe80-4650-b989-c8af4dbf3ba0" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Select" doc:id="49eaa674-c44f-4be4-b727-5b40045b2268" processor="db:select">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="e77cf46c-900a-453c-8df9-3e876da2b82e" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/java  --- readUrl('classpath://MuniterrorScenarioFlowtestNoRecords/mock_payload.dwl')]" mediaType="application/java " encoding="UTF-8" />
+					<munit-tools:variables >
+						<munit-tools:variable key="StudentName" value="#[output application/java --- readUrl('classpath://MuniterrorScenarioFlowtestNoRecords/mock_variable_.dwl')]" mediaType="application/java" encoding="UTF-8" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="75fbbe01-c764-4f14-848f-2d9c402089c3" >
+				<munit:payload value="#[readUrl('classpath://MuniterrorScenarioFlowtestNoRecords/set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://MuniterrorScenarioFlowtestNoRecords/set-event_attributes.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to MuniterrorScenarioFlow" doc:id="db636d58-34a3-4114-aa33-e1a9852d8ad2" name="MuniterrorScenarioFlow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="ea29c794-ca66-4572-8788-b7e101f456c3" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import MuniterrorScenarioFlowtestNoRecords::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+<munit:test name="MuniterrorScenarioFlow-testError" doc:id="b1c2a6b9-4be5-4ea7-8e00-f915830b5ab9" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Select" doc:id="0cbb4af7-d8e0-4866-a500-b6547d36ecc8" processor="db:select">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="e77cf46c-900a-453c-8df9-3e876da2b82e" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					
+					<munit-tools:error typeId="DB:CONNECTIVITY" />
+					<munit-tools:variables >
+						<munit-tools:variable key="StudentName" value="#[output application/java --- readUrl('classpath://MuniterrorScenarioFlowtestNoRecords/mock_variable_.dwl')]" mediaType="application/java" encoding="UTF-8" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="ee9d4cd5-ec89-4496-97ff-b0c5f36215bf" >
+				<munit:payload value="#[readUrl('classpath://MuniterrorScenarioFlowtestNoRecords/set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://MuniterrorScenarioFlowtestNoRecords/set-event_attributes.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution>
+			<try doc:name="Try" doc:id="257548b7-a169-414f-bab7-f09f6b0008c8" >
+				<flow-ref doc:name="Flow-ref to MuniterrorScenarioFlow" doc:id="271ea1bb-d4b4-4963-b087-717bc458a2e9" name="MuniterrorScenarioFlow" />
+				<error-handler >
+					<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="446e4048-fa76-4c84-8a4a-1c77b6757329" >
+						<logger level="INFO" doc:name="Logger" doc:id="5fa835cb-35a4-42b7-8ae7-cf393e443106" message="continue.."/>
+					</on-error-continue>
+				</error-handler>
+			</try>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-that doc:name="Assert that" doc:id="443f2099-5ce0-47ad-b0de-5e4dfacd3f56" expression="#[payload.error]" is="#[MunitTools::equalTo('DB CONNECTIVITY')]"/>
+		</munit:validation>
+	</munit:test>
+</mule>
